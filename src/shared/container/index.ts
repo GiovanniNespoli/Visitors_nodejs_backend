@@ -1,9 +1,10 @@
 import { container } from "tsyringe";
 
-import VisitorRepository from "@modules/visitors/infra/prisma/repository/VisitorRespository";
-import IVisitorsRepository from "@modules/visitors/repository/IVisitorsRepository";
+import "@modules/visitors/visitors.module";
+import context from "@shared/container/modulesContext";
 
-container.registerSingleton<IVisitorsRepository>(
-  "VisitorRepository",
-  VisitorRepository,
-);
+context.metadata.forEach((module) => {
+  module.providers?.forEach((provider) => {
+    container.registerSingleton(provider.provideAs, provider.useClass);
+  });
+});

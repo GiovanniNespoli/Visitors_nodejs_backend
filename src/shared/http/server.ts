@@ -1,34 +1,12 @@
-import express, { Request, Response, NextFunction } from "express";
 import "reflect-metadata";
-import cors from "cors";
-import routes from "./routes";
-import AppError from "@shared/errors/AppError";
+import "@shared/container/";
 
-const app = express();
+import { env } from "@config/env";
+import logger from "@config/log";
+import App from "./app";
 
-app.use(cors());
-app.use(express.json());
-app.use(routes);
+const port = env.PORT || 3001;
 
-app.use(
-  (err: Error, request: Request, response: Response, next: NextFunction) => {
-    if (err instanceof AppError) {
-      return response.status(err.statusCode).json({
-        status: "error",
-        message: err.message,
-      });
-    }
-
-    console.error(err);
-
-    return response.status(500).json({
-      status: "error",
-      message: "Internal server error",
-    });
-  },
-);
-
-app.listen(3333, () => {
-  console.log("✔✔✔✔✔✔✔✔✔");
-  console.log("http://localhost:3333");
+new App().express.listen(port, () => {
+  logger.info(`Server running on http://localhost:${port}.`);
 });

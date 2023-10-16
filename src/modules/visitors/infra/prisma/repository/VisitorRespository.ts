@@ -20,6 +20,16 @@ export default class VisitorRepository implements IVisitorsRepository {
     return await prisma.visitors.findMany();
   }
 
+  public async findVisitorByEmail(email: string): Promise<Visitor | undefined> {
+    const findVisitor = await prisma.visitors.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    return findVisitor || undefined;
+  }
+
   public async findAllVistorsByDate(date: Date): Promise<Visitor[]> {
     const filterVisitor = await prisma.visitors.findMany({
       where: {

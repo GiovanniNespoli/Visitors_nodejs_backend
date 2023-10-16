@@ -1,8 +1,8 @@
-import visitorRoutes from "@modules/visitors/infra/http/routes/visitors.routes";
-import { Router } from "express";
+import { Express } from "express";
+import modulesRoutes from "./modules.routes";
 
-const routes = Router();
+function setupRoutes(app: Express): void {
+  app.use("/api", modulesRoutes);
+}
 
-routes.use("/", visitorRoutes);
-
-export default routes;
+export default setupRoutes;

@@ -5,7 +5,7 @@ import IVisitorsRepository from "../repository/IVisitorsRepository";
 @injectable()
 export default class IndexVisitorsService {
   constructor(
-    @inject("VisitorRepository")
+    @inject("VisitorsRepository")
     private visitor: IVisitorsRepository,
   ) {}
 

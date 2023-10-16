@@ -6,4 +6,6 @@ const visitorsControllers = new VisitorsControllers();
 
 visitorRoutes.get("/", visitorsControllers.index);
 
+visitorRoutes.post("/", visitorsControllers.create);
+
 export default visitorRoutes;

@@ -7,6 +7,7 @@ export default interface IVisitorsRepository {
   listAllVisitors(): Promise<Visitor[]>;
   findAllVistorsByDate(date: Date): Promise<Visitor[]>;
   findVisitor(name: string): Promise<Visitor[]>;
+  findVisitorByEmail(email: string): Promise<Visitor | undefined>;
   deleteVisitor(id: number): Promise<Visitor>;
   updateVisitor(data: IUpdateVisitorDTO): Promise<Visitor>;
 }
