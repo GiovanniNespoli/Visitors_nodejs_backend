@@ -1,6 +1,6 @@
 import Module from "@shared/decorators/Module";
 import VisitorsRepository from "./infra/prisma/repository/VisitorRespository";
-import visitorsRoute from "./infra/http/routes/visitors.routes";
+import visitorsRoute from "./infra/http/routes/index";
 
 @Module({
   router: visitorsRoute,
