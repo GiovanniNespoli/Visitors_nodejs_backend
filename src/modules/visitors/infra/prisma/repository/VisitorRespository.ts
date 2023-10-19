@@ -11,7 +11,7 @@ export default class VisitorRepository implements IVisitorsRepository {
     phone,
   }: ICreateVisitorDTO): Promise<Visitor> {
     const createVisitor = await prisma.visitors.create({
-      data: { email, name, phone },
+      data: { email, name, phone, createdAt: new Date() },
     });
 
     return createVisitor;
@@ -30,10 +30,16 @@ export default class VisitorRepository implements IVisitorsRepository {
     return findVisitor || undefined;
   }
 
-  public async findAllVistorsByDate(date: Date): Promise<Visitor[]> {
+  public async findAllVistorsByDate(
+    nextDate: Date,
+    earlyDate: Date,
+  ): Promise<Visitor[]> {
     const filterVisitor = await prisma.visitors.findMany({
       where: {
-        createdAt: date,
+        createdAt: {
+          lt: nextDate,
+          gt: earlyDate,
+        },
       },
     });
 
@@ -42,7 +48,7 @@ export default class VisitorRepository implements IVisitorsRepository {
   public async findVisitor(name: string): Promise<Visitor[]> {
     const filterVisitor = await prisma.visitors.findMany({
       where: {
-        createdAt: name,
+        name,
       },
     });
 

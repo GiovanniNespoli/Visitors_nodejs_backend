@@ -44,4 +44,24 @@ visitorRoutes.put(
   visitorsControllers.update,
 );
 
+visitorRoutes.delete(
+  "/:id",
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.number().required(),
+    },
+  }),
+  visitorsControllers.delete,
+);
+
+visitorRoutes.get(
+  "/byDate",
+  celebrate({
+    [Segments.BODY]: {
+      date: Joi.date().required(),
+    },
+  }),
+  visitorsControllers.indexByDate,
+);
+
 export default visitorRoutes;
