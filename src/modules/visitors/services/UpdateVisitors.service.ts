@@ -25,7 +25,7 @@ export default class UpdateVisitorsService {
   }: IRequestData): Promise<Visitor> {
     const isVisitorExist = await this.visitor.findVisitor(id);
 
-    if (isVisitorExist) {
+    if (!isVisitorExist) {
       throw new BadRequestError("Visitante não existe");
     }
 
@@ -40,6 +40,8 @@ export default class UpdateVisitorsService {
       email,
       name,
       phone,
+      createdAt: isVisitorExist.createdAt,
+      updatedAt: new Date(),
     });
 
     return update;

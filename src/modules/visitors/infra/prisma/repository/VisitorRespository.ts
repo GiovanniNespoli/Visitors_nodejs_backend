@@ -55,12 +55,13 @@ export default class VisitorRepository implements IVisitorsRepository {
     return filterVisitor;
   }
 
-  public async deleteVisitor(id: number): Promise<Visitor> {
-    return await prisma.visitors.delete({
+  public async deleteVisitor(id: number): Promise<Visitor | undefined> {
+    const deleteVisitor = await prisma.visitors.delete({
       where: {
         id,
       },
     });
+    return deleteVisitor || undefined;
   }
   public async updateVisitor({
     email,

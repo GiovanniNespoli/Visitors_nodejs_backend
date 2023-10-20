@@ -9,6 +9,6 @@ export default interface IVisitorsRepository {
   findVisitorByName(name: string): Promise<Visitor[]>;
   findVisitorByEmail(email: string): Promise<Visitor | undefined>;
   findVisitor(id: number): Promise<Visitor | undefined>;
-  deleteVisitor(id: number): Promise<Visitor>;
+  deleteVisitor(id: number): Promise<Visitor | undefined>;
   updateVisitor(data: IUpdateVisitorDTO): Promise<Visitor>;
 }
