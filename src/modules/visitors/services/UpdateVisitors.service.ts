@@ -5,9 +5,9 @@ import { BadRequestError } from "@shared/errors";
 
 interface IRequestData {
   id: number;
-  name: string;
-  phone: string;
-  email: string;
+  name?: string;
+  phone?: string;
+  email?: string;
 }
 
 @injectable()
@@ -23,26 +23,27 @@ export default class UpdateVisitorsService {
     name,
     phone,
   }: IRequestData): Promise<Visitor> {
-    const isVisitorExist = await this.visitor.findVisitor(id);
+    const visitor = await this.visitor.findVisitor(id);
 
-    if (!isVisitorExist) {
+    if (!visitor) {
       throw new BadRequestError("Visitante não existe");
     }
 
-    const isVisitorEmail = await this.visitor.findVisitorByEmail(email);
+    if (email) {
+      const isVisitorEmail = await this.visitor.findVisitorByEmail(email);
 
-    if (isVisitorEmail) {
-      throw new BadRequestError("Email já exisite");
+      if (isVisitorEmail) {
+        throw new BadRequestError("Email já exisite");
+      }
+
+      visitor.email = email;
     }
 
-    const update = await this.visitor.updateVisitor({
-      id,
-      email,
-      name,
-      phone,
-      createdAt: isVisitorExist.createdAt,
-      updatedAt: new Date(),
-    });
+    if (name) visitor.name = name;
+    if (phone) visitor.phone = phone;
+    visitor.updatedAt = new Date();
+
+    const update = await this.visitor.updateVisitor(visitor);
 
     return update;
   }

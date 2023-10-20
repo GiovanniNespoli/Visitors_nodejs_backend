@@ -19,9 +19,6 @@ export default class IndexVisitorsByDate {
       days: -1,
     });
 
-    console.log(nextDate);
-    console.log(earlyDate);
-
     return this.visitor.findAllVistorsByDate(nextDate, earlyDate);
   }
 }

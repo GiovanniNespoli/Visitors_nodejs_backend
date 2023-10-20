@@ -10,7 +10,7 @@ export default class DeleteVisitorsService {
     private visitor: IVisitorsRepository,
   ) {}
 
-  public async execute(id: number): Promise<Visitor> {
+  public async execute(id: number): Promise<Visitor | undefined> {
     const findVisitorById = await this.visitor.findVisitor(id);
 
     if (!findVisitorById) {
