@@ -55,13 +55,23 @@ visitorRoutes.delete(
 );
 
 visitorRoutes.get(
-  "/byDate",
+  "/:date",
   celebrate({
-    [Segments.BODY]: {
+    [Segments.PARAMS]: {
       date: Joi.date().required(),
     },
   }),
   visitorsControllers.indexByDate,
+);
+
+visitorRoutes.get(
+  "/name/:name",
+  celebrate({
+    [Segments.PARAMS]: {
+      name: Joi.string().required(),
+    },
+  }),
+  visitorsControllers.indexByName,
 );
 
 export default visitorRoutes;

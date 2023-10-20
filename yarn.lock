@@ -2305,7 +2305,7 @@ tsx@^3.13.0:
 
 tsyringe@^4.8.0:
   version "4.8.0"
-  resolved "https://registry.npmjs.org/tsyringe/-/tsyringe-4.8.0.tgz"
+  resolved "https://registry.yarnpkg.com/tsyringe/-/tsyringe-4.8.0.tgz#d599651b36793ba872870fee4f845bd484a5cac1"
   integrity sha512-YB1FG+axdxADa3ncEtRnQCFq/M0lALGLxSZeVNbTU8NqhOVc51nnv2CISTcvc1kyv6EGPtXVr0v6lWeDxiijOA==
   dependencies:
     tslib "^1.9.3"

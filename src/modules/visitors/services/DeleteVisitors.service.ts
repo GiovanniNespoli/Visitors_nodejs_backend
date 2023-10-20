@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import IVisitorsRepository from "../repository/IVisitorsRepository";
 import Visitor from "../infra/prisma/models/Visitors";
+import { BadRequestError } from "@shared/errors";
 
 @injectable()
 export default class DeleteVisitorsService {
@@ -10,6 +11,12 @@ export default class DeleteVisitorsService {
   ) {}
 
   public async execute(id: number): Promise<Visitor> {
+    const findVisitorById = await this.visitor.findVisitor(id);
+
+    if (!findVisitorById) {
+      throw new BadRequestError("Id não existe");
+    }
+
     return this.visitor.deleteVisitor(id);
   }
 }

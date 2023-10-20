@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import Visitor from "../infra/prisma/models/Visitors";
 import IVisitorsRepository from "../repository/IVisitorsRepository";
+import { BadRequestError } from "@shared/errors";
 
 interface IRequestData {
   id: number;
@@ -22,11 +23,17 @@ export default class UpdateVisitorsService {
     name,
     phone,
   }: IRequestData): Promise<Visitor> {
-    // const isVisitorEmail = await this.visitor.findVisitorByEmail(email);
+    const isVisitorExist = await this.visitor.findVisitor(id);
 
-    // if (!isVisitorEmail) {
-    //   throw new BadRequestError("Email não existe");
-    // }
+    if (isVisitorExist) {
+      throw new BadRequestError("Visitante não existe");
+    }
+
+    const isVisitorEmail = await this.visitor.findVisitorByEmail(email);
+
+    if (isVisitorEmail) {
+      throw new BadRequestError("Email já exisite");
+    }
 
     const update = await this.visitor.updateVisitor({
       id,

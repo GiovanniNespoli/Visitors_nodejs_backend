@@ -6,8 +6,9 @@ export default interface IVisitorsRepository {
   insertNewVisitor(data: ICreateVisitorDTO): Promise<Visitor>;
   listAllVisitors(): Promise<Visitor[]>;
   findAllVistorsByDate(nextDate: Date, earlyDate: Date): Promise<Visitor[]>;
-  findVisitor(name: string): Promise<Visitor[]>;
+  findVisitorByName(name: string): Promise<Visitor[]>;
   findVisitorByEmail(email: string): Promise<Visitor | undefined>;
+  findVisitor(id: number): Promise<Visitor | undefined>;
   deleteVisitor(id: number): Promise<Visitor>;
   updateVisitor(data: IUpdateVisitorDTO): Promise<Visitor>;
 }

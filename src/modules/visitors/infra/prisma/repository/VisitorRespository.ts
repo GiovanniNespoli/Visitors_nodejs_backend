@@ -21,13 +21,13 @@ export default class VisitorRepository implements IVisitorsRepository {
   }
 
   public async findVisitorByEmail(email: string): Promise<Visitor | undefined> {
-    const findVisitor = await prisma.visitors.findFirst({
+    const findVisitorByName = await prisma.visitors.findFirst({
       where: {
         email,
       },
     });
 
-    return findVisitor || undefined;
+    return findVisitorByName || undefined;
   }
 
   public async findAllVistorsByDate(
@@ -45,7 +45,7 @@ export default class VisitorRepository implements IVisitorsRepository {
 
     return filterVisitor;
   }
-  public async findVisitor(name: string): Promise<Visitor[]> {
+  public async findVisitorByName(name: string): Promise<Visitor[]> {
     const filterVisitor = await prisma.visitors.findMany({
       where: {
         name,
@@ -80,5 +80,15 @@ export default class VisitorRepository implements IVisitorsRepository {
     });
 
     return newValues;
+  }
+
+  public async findVisitor(id: number): Promise<Visitor | undefined> {
+    const newValues = await prisma.visitors.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    return newValues || undefined;
   }
 }

@@ -1,8 +1,9 @@
-import CreateVisitorService from "@modules/visitors/services/CreateVisitors.services";
-import DeleteVisitorsService from "@modules/visitors/services/DeleteVisitors.services";
+import CreateVisitorService from "@modules/visitors/services/CreateVisitors.service";
+import DeleteVisitorsService from "@modules/visitors/services/DeleteVisitors.service";
 import IndexVisitorsService from "@modules/visitors/services/IndexVisitors.service";
-import IndexVisitorsByDate from "@modules/visitors/services/IndexVisitorsByDate.services";
-import UpdateVisitorsService from "@modules/visitors/services/UpdateVisitors.services";
+import IndexVisitorsByDate from "@modules/visitors/services/IndexVisitorsByDate.service";
+import IndexVisitorsByName from "@modules/visitors/services/IndexVisitorsByName.service";
+import UpdateVisitorsService from "@modules/visitors/services/UpdateVisitors.service";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -56,12 +57,22 @@ export default class VisitorsControllers {
   }
 
   public async indexByDate(req: Request, res: Response): Promise<Response> {
-    const { date } = req.body;
+    const { date } = req.params;
 
     const indexByDateProvider = container.resolve(IndexVisitorsByDate);
 
-    const IndexVisitors = await indexByDateProvider.execute(date);
+    const IndexVisitors = await indexByDateProvider.execute(new Date(date));
 
     return res.json(IndexVisitors);
+  }
+
+  public async indexByName(req: Request, res: Response): Promise<Response> {
+    const { name } = req.params;
+
+    const indexByNameProvider = container.resolve(IndexVisitorsByName);
+
+    const indexVisitors = await indexByNameProvider.execute(name);
+
+    return res.json(indexVisitors);
   }
 }
