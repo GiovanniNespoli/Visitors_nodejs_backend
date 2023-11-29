@@ -1,4 +1,4 @@
-export default interface IVisitor {
+interface IVisitor {
   id: number;
   name: string;
   email: string | null;
@@ -6,3 +6,18 @@ export default interface IVisitor {
   createdAt: Date;
   updatedAt: Date;
 }
+
+interface ICreateVisitor {
+  name: string;
+  email: string;
+  phone: string;
+}
+
+interface IUpdateVisitor {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+}
+
+export { IVisitor, ICreateVisitor, IUpdateVisitor };

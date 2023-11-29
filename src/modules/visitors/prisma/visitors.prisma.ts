@@ -1,16 +1,58 @@
 import { PrismaClient } from "@prisma/client";
 import IVisitorsRepository from "../repository/IVisitors.repository";
-import IVisitor from "../interface/IVisitor";
+import {
+  IUpdateVisitor,
+  ICreateVisitor,
+  IVisitor,
+} from "../interface/IVisitor";
+import { addDays, format } from "date-fns";
 
 const prisma = new PrismaClient();
 
 export default class VisitorPrisma implements IVisitorsRepository {
+  public async GetAllVisitorsPerDay(): Promise<IVisitor[]> {
+    const todayDate = new Date();
+
+    const formatedDate = format(todayDate, "yyy-M-d");
+    const sumDate = addDays(new Date(formatedDate), 1);
+
+    const a = await prisma.visitors.findMany({
+      where: {
+        createdAt: {
+          lte: new Date(sumDate).toISOString(),
+          gte: new Date(formatedDate).toISOString(),
+        },
+      },
+    });
+
+    console.log("a", a);
+    return a;
+  }
+
+  public async FindVisitorByEmail(email: string): Promise<IVisitor | null> {
+    return await prisma.visitors.findFirst({
+      where: {
+        email,
+      },
+    });
+  }
+
   public async GetAllVisitors(): Promise<IVisitor[]> {
     return await prisma.visitors.findMany();
   }
 
-  public async CreateVisitor(data: IVisitor): Promise<IVisitor> {
-    return await prisma.visitors.create({ data });
+  public async CreateVisitor({
+    email,
+    name,
+    phone,
+  }: ICreateVisitor): Promise<IVisitor> {
+    return await prisma.visitors.create({
+      data: {
+        name,
+        email,
+        phone,
+      },
+    });
   }
 
   public async DeleteVisitor(id: number): Promise<IVisitor> {
@@ -21,11 +63,20 @@ export default class VisitorPrisma implements IVisitorsRepository {
     });
   }
 
-  public async UpdateVisitor(data: IVisitor): Promise<IVisitor> {
+  public async UpdateVisitor({
+    id,
+    email,
+    name,
+    phone,
+  }: IUpdateVisitor): Promise<IVisitor> {
     return await prisma.visitors.update({
-      data,
+      data: {
+        name,
+        phone,
+        email,
+      },
       where: {
-        id: data.id,
+        id,
       },
     });
   }

@@ -1,6 +1,6 @@
 import { injectable, inject } from "tsyringe";
-import IVisitor from "../interface/IVisitor";
 import IVisitorsRepository from "../repository/IVisitors.repository";
+import { IVisitor } from "../interface/IVisitor";
 
 @injectable()
 export default class IndexVisitorsService {
