@@ -1,51 +1,29 @@
 {
-  "name": "backend",
+  "name": "visitantes_backend_v2",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch  src/shared/http/server.ts",
-    "build": "tsup src",
-    "migration": "prisma migrate dev --name init",
-    "format": "prettier . --write",
-    "prepare": "husky install",
-    "test": "vitest run --coverage"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@prisma/client": "^5.4.2",
-    "bcryptjs": "^2.4.3",
-    "celebrate": "^15.0.1",
-    "cors": "^2.8.5",
-    "date-fns": "^2.30.0",
-    "express": "^4.18.2",
-    "express-async-errors": "^3.1.1",
-    "tsyringe": "^4.8.0",
-    "winston": "^3.11.0",
-    "winston-daily-rotate-file": "^4.7.1",
-    "zod": "^3.22.4"
-  },
   "devDependencies": {
-    "@types/cors": "^2.8.14",
-    "@types/express": "^4.17.18",
-    "@types/node": "^20.8.7",
-    "@typescript-eslint/eslint-plugin": "^6.7.5",
-    "@typescript-eslint/parser": "^6.7.5",
-    "@vitest/coverage-v8": "^0.34.6",
-    "eslint": "^8.51.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.1",
-    "prettier": "3.0.3",
-    "prisma": "^5.4.2",
-    "reflect-metadata": "^0.1.13",
-    "tsup": "^7.2.0",
-    "tsx": "^3.13.0",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.6"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.0",
+    "prisma": "^5.6.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
   },
-  "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+  "dependencies": {
+    "@prisma/client": "^5.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.8.0"
   }
 }

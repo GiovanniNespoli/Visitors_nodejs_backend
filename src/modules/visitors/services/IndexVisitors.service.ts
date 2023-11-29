@@ -1,15 +1,14 @@
-import { inject, injectable } from "tsyringe";
-import Visitor from "../infra/prisma/models/Visitors";
-import IVisitorsRepository from "../repository/IVisitorsRepository";
+import { injectable, inject } from "tsyringe";
+import IVisitor from "../interface/IVisitor";
+import IVisitorsRepository from "../repository/IVisitors.repository";
 
 @injectable()
 export default class IndexVisitorsService {
   constructor(
-    @inject("VisitorsRepository")
-    private visitor: IVisitorsRepository,
+    @inject("VisitorRepository")
+    private visitoryRepository: IVisitorsRepository
   ) {}
-
-  public async execute(): Promise<Visitor[]> {
-    return this.visitor.listAllVisitors();
+  public async execute(): Promise<IVisitor[]> {
+    return await this.visitoryRepository.GetAllVisitors();
   }
 }
