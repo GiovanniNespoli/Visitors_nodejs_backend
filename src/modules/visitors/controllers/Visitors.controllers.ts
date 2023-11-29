@@ -5,6 +5,8 @@ import CreateVisitorService from "../services/CreateVisitors.service";
 import DeleteVisitorService from "../services/DeleteVisitors.service";
 import UpdateVisitorService from "../services/UpdateVisitors.service";
 import IndexTodayVisitors from "../services/IndexTodayVisitors.service";
+import IndexTotalMonthVisitorsService from "../services/IndexTotalMonthVisitors.service";
+import IndexVisitorsPerMonthService from "../services/IndexVisitorsPerMonth.service";
 
 export default class VisitorsController {
   public async Index(request: Request, response: Response): Promise<Response> {
@@ -19,6 +21,26 @@ export default class VisitorsController {
     response: Response
   ): Promise<Response> {
     const indexVisitor = container.resolve(IndexTodayVisitors);
+    const index = await indexVisitor.execute();
+
+    return response.status(200).json(index);
+  }
+
+  public async IndexPerMonth(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const indexVisitor = container.resolve(IndexTotalMonthVisitorsService);
+    const index = await indexVisitor.execute();
+
+    return response.status(200).json(index);
+  }
+
+  public async IndexVisitorsPerMonth(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const indexVisitor = container.resolve(IndexVisitorsPerMonthService);
     const index = await indexVisitor.execute();
 
     return response.status(200).json(index);

@@ -5,18 +5,43 @@ import {
   ICreateVisitor,
   IVisitor,
 } from "../interface/IVisitor";
-import { addDays, format } from "date-fns";
+import {
+  addDays,
+  format,
+  lastDayOfMonth,
+  setHours,
+  startOfMonth,
+} from "date-fns";
 
 const prisma = new PrismaClient();
 
 export default class VisitorPrisma implements IVisitorsRepository {
+  public async GetAllVisitorsPerMonth(): Promise<IVisitor[]> {
+    const todayDate = new Date();
+
+    const firstDay = startOfMonth(todayDate);
+    const lastDay = lastDayOfMonth(todayDate);
+
+    const formatedFirstDay = setHours(firstDay, -3);
+    const formatedLastDay = setHours(lastDay, 21);
+
+    return await prisma.visitors.findMany({
+      where: {
+        createdAt: {
+          lte: new Date(formatedLastDay).toISOString(),
+          gte: new Date(formatedFirstDay).toISOString(),
+        },
+      },
+    });
+  }
+
   public async GetAllVisitorsPerDay(): Promise<IVisitor[]> {
     const todayDate = new Date();
 
     const formatedDate = format(todayDate, "yyy-M-d");
     const sumDate = addDays(new Date(formatedDate), 1);
 
-    const a = await prisma.visitors.findMany({
+    return await prisma.visitors.findMany({
       where: {
         createdAt: {
           lte: new Date(sumDate).toISOString(),
@@ -24,9 +49,6 @@ export default class VisitorPrisma implements IVisitorsRepository {
         },
       },
     });
-
-    console.log("a", a);
-    return a;
   }
 
   public async FindVisitorByEmail(email: string): Promise<IVisitor | null> {
