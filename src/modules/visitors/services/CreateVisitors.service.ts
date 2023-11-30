@@ -15,10 +15,14 @@ export default class CreateVisitorService {
     email,
     phone,
   }: ICreateVisitor): Promise<IVisitor> {
-    const findVisitor = await this.visitoryRepository.FindVisitorByEmail(email);
+    if (email) {
+      const findVisitor = await this.visitoryRepository.FindVisitorByEmail(
+        email
+      );
 
-    if (findVisitor) {
-      throw new ApiError("O email cadastrado já existe!", 404);
+      if (findVisitor) {
+        throw new ApiError("O email cadastrado já existe!", 404);
+      }
     }
 
     return await this.visitoryRepository.CreateVisitor({

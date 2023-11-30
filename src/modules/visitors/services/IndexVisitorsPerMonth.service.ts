@@ -1,39 +1,11 @@
 import { injectable, inject } from "tsyringe";
 import IVisitorsRepository from "../repository/IVisitors.repository";
+import { IVisitor } from "../interface/IVisitor";
 
-interface IData {
-  data: string;
+interface MonthlyData {
+  month: string;
   value: number;
 }
-
-const data: IData[] = [
-  { data: "2023-01-15", value: 100 },
-  { data: "2023-01-22", value: 150 },
-  { data: "2023-01-22", value: 150 },
-  { data: "2023-01-22", value: 150 },
-  { data: "2023-02-10", value: 120 },
-  { data: "2023-02-10", value: 120 },
-  { data: "2023-03-10", value: 120 },
-  { data: "2023-03-10", value: 120 },
-  { data: "2023-04-10", value: 120 },
-  { data: "2023-04-10", value: 120 },
-  { data: "2023-05-10", value: 120 },
-  { data: "2023-05-10", value: 120 },
-  { data: "2023-06-10", value: 120 },
-  { data: "2023-06-10", value: 120 },
-  { data: "2023-07-10", value: 120 },
-  { data: "2023-07-10", value: 120 },
-  { data: "2023-08-10", value: 120 },
-  { data: "2023-08-10", value: 120 },
-  { data: "2023-09-10", value: 120 },
-  { data: "2023-09-10", value: 120 },
-  { data: "2023-10-10", value: 120 },
-  { data: "2023-10-10", value: 120 },
-  { data: "2023-11-10", value: 120 },
-  { data: "2023-11-10", value: 120 },
-  { data: "2023-12-10", value: 120 },
-  { data: "2023-12-10", value: 120 },
-];
 
 @injectable()
 export default class IndexVisitorsPerMonthService {
@@ -42,28 +14,52 @@ export default class IndexVisitorsPerMonthService {
     private visitoryRepository: IVisitorsRepository
   ) {}
   public async execute(): Promise<any> {
-    // const allVisiotors = await this.visitoryRepository.GetAllVisitors();
-    function calculateTotalPerMonth(data: IData[]): { [month: string]: number }[] {
-      const dataPerMonth: { [month: string]: number } = {};
+    const allVisitors  = await this.visitoryRepository.GetAllVisitors();
 
-      data.forEach((item) => {
-        const month = new Date(item.data).toLocaleString("default", {
+    function filterAndCountByMonth(users: IVisitor[]): MonthlyData[] {
+      const dataByMonth: { [month: string]: number } = {};
+
+      users.forEach((user) => {
+        const month = new Date(user.createdAt).toLocaleString("default", {
           month: "long",
         });
 
-        if (!dataPerMonth[month]) {
-          dataPerMonth[month] = 0;
+        if (!dataByMonth[month]) {
+          dataByMonth[month] = 0;
         }
 
-        dataPerMonth[month]++;
+        dataByMonth[month]++;
       });
 
-      return Object.keys(dataPerMonth).map((month) => ({
-        [month]: dataPerMonth[month],
+      const result: MonthlyData[] = Object.keys(dataByMonth).map((month) => ({
+        month,
+        value: dataByMonth[month],
       }));
+
+      // Ordenar por mês
+      const sortedResult = result.sort((a, b) => {
+        const monthsOrder = [
+          "janeiro",
+          "fevereiro",
+          "março",
+          "abril",
+          "maio",
+          "junho",
+          "julho",
+          "agosto",
+          "setembro",
+          "outubro",
+          "novembro",
+          "dezembro",
+        ];
+
+        return monthsOrder.indexOf(a.month) - monthsOrder.indexOf(b.month);
+      });
+
+      return sortedResult;
     }
 
-    const result = calculateTotalPerMonth(data);
+    const result = filterAndCountByMonth(allVisitors);
 
     return result;
   }
