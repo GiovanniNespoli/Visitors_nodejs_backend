@@ -11,11 +11,27 @@ import {
   lastDayOfMonth,
   setHours,
   startOfMonth,
+  startOfDay,
+  endOfDay,
 } from "date-fns";
 
 const prisma = new PrismaClient();
 
 export default class VisitorPrisma implements IVisitorsRepository {
+  public async GetVistorsPerDay(day: Date): Promise<IVisitor[]> {
+
+    const test = await prisma.visitors.findMany({
+      where: {
+        createdAt: {
+          lte: endOfDay(day),
+          gte: startOfDay(day),
+        },
+      },
+    });
+
+    return test;
+  }
+
   public async GetAllVisitorsPerMonth(): Promise<IVisitor[]> {
     const todayDate = new Date();
 

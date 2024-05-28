@@ -7,6 +7,8 @@ import UpdateVisitorService from "../services/UpdateVisitors.service";
 import IndexTodayVisitors from "../services/IndexTodayVisitors.service";
 import IndexTotalMonthVisitorsService from "../services/IndexTotalMonthVisitors.service";
 import IndexVisitorsPerMonthService from "../services/IndexVisitorsPerMonth.service";
+import IndexVisitorsPerDay from "../services/IndexVisitorsPerDay.service";
+import { parseISO } from "date-fns";
 
 export default class VisitorsController {
   public async Index(request: Request, response: Response): Promise<Response> {
@@ -56,8 +58,6 @@ export default class VisitorsController {
       phone,
     });
 
-    console.log(create);
-
     return response.status(201).json(create);
   }
 
@@ -82,8 +82,18 @@ export default class VisitorsController {
       phone,
     });
 
-    console.log(update);
-
     return response.status(201).json(update);
+  }
+
+  public async FilterPerDay(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { day } = request.params;
+    const indexPerDay = container.resolve(IndexVisitorsPerDay);
+
+    const filter = await indexPerDay.execute(parseISO(day));
+
+    return response.status(200).json(filter);
   }
 }

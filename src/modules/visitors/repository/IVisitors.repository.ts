@@ -13,4 +13,5 @@ export default interface IVisitorsRepository {
   FindVisitorByEmail(email: string): Promise<IVisitor | null>;
   GetAllVisitorsPerDay(): Promise<IVisitor[]>;
   GetAllVisitorsPerMonth(): Promise<IVisitor[]>;
+  GetVistorsPerDay(day: Date): Promise<IVisitor[]>;
 }
