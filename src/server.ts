@@ -7,7 +7,7 @@ import routes from "./routes";
 import { errorMiddleware } from "./middlewares/error";
 
 const app: Application = express();
-const port = 8000;
+const port = 3001;
 
 app.use(cors());
 app.use(express.json());
