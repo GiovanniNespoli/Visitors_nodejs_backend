@@ -13,8 +13,8 @@ export default class UpdateVisitorService {
   public async execute({
     id,
     name,
-    email,
-    phone,
+    church,
+    observation,
   }: IUpdateVisitor): Promise<IVisitor> {
     const findVisitor = await this.visitoryRepository.FindVisitorById(id);
 
@@ -24,9 +24,9 @@ export default class UpdateVisitorService {
 
     return await this.visitoryRepository.UpdateVisitor({
       id,
-      email,
+      church,
       name,
-      phone,
+      observation,
     });
   }
 }

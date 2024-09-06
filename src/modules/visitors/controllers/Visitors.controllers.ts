@@ -49,13 +49,13 @@ export default class VisitorsController {
   }
 
   public async Create(request: Request, response: Response): Promise<Response> {
-    const { name, email, phone } = request.body;
+    const { name, church, observation } = request.body;
 
     const createVisitor = container.resolve(CreateVisitorService);
     const create = await createVisitor.execute({
       name,
-      email,
-      phone,
+      church,
+      observation,
     });
 
     return response.status(201).json(create);
@@ -72,14 +72,14 @@ export default class VisitorsController {
 
   public async Update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { name, email, phone } = request.body;
+    const { name, church, observation } = request.body;
 
     const updateVisitor = container.resolve(UpdateVisitorService);
     const update = await updateVisitor.execute({
       id: parseInt(id),
       name,
-      email,
-      phone,
+      church,
+      observation,
     });
 
     return response.status(201).json(update);

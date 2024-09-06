@@ -1,23 +1,23 @@
 interface IVisitor {
   id: number;
   name: string;
-  email: string | null;
-  phone: string | null;
+  church: string | null;
+  observation: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
 interface ICreateVisitor {
   name: string;
-  email: string;
-  phone: string;
+  church: string;
+  observation: string;
 }
 
 interface IUpdateVisitor {
   id: number;
   name: string;
-  email: string;
-  phone: string;
+  church: string;
+  observation: string;
 }
 
 export { IVisitor, ICreateVisitor, IUpdateVisitor };

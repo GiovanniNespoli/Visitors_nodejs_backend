@@ -8,10 +8,19 @@ datasource db {
 }
 
 model Visitors {
+  id          Int      @id @default(autoincrement())
+  name        String
+  church      String?
+  observation String?
+  phone       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Church {
   id        Int      @id @default(autoincrement())
-  name      String
-  email     String?
-  phone     String?
+  label     String
+  number    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

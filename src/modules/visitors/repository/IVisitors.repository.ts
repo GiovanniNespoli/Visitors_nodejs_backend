@@ -10,7 +10,6 @@ export default interface IVisitorsRepository {
   DeleteVisitor(id: number): Promise<IVisitor>;
   UpdateVisitor(data: IUpdateVisitor): Promise<IVisitor>;
   FindVisitorById(id: number): Promise<IVisitor | null>;
-  FindVisitorByEmail(email: string): Promise<IVisitor | null>;
   GetAllVisitorsPerDay(): Promise<IVisitor[]>;
   GetAllVisitorsPerMonth(): Promise<IVisitor[]>;
   GetVistorsPerDay(day: Date): Promise<IVisitor[]>;

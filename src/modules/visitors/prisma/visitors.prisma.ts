@@ -19,7 +19,6 @@ const prisma = new PrismaClient();
 
 export default class VisitorPrisma implements IVisitorsRepository {
   public async GetVistorsPerDay(day: Date): Promise<IVisitor[]> {
-
     const test = await prisma.visitors.findMany({
       where: {
         createdAt: {
@@ -67,28 +66,20 @@ export default class VisitorPrisma implements IVisitorsRepository {
     });
   }
 
-  public async FindVisitorByEmail(email: string): Promise<IVisitor | null> {
-    return await prisma.visitors.findFirst({
-      where: {
-        email,
-      },
-    });
-  }
-
   public async GetAllVisitors(): Promise<IVisitor[]> {
     return await prisma.visitors.findMany();
   }
 
   public async CreateVisitor({
-    email,
+    church,
     name,
-    phone,
+    observation,
   }: ICreateVisitor): Promise<IVisitor> {
     return await prisma.visitors.create({
       data: {
         name,
-        email,
-        phone,
+        church,
+        observation,
       },
     });
   }
@@ -103,15 +94,15 @@ export default class VisitorPrisma implements IVisitorsRepository {
 
   public async UpdateVisitor({
     id,
-    email,
+    church,
     name,
-    phone,
+    observation,
   }: IUpdateVisitor): Promise<IVisitor> {
     return await prisma.visitors.update({
       data: {
         name,
-        phone,
-        email,
+        observation,
+        church,
       },
       where: {
         id,
