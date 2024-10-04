@@ -4,7 +4,7 @@ import { IChurch } from "../interface/IChurch";
 import IChurchRepository from "../repository/IChurch.repository";
 
 @injectable()
-export default class DeleteVisitorService {
+export default class DeleteChurchService {
   constructor(
     @inject("ChurchRepository")
     private churchRepository: IChurchRepository
