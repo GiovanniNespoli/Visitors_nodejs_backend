@@ -2,6 +2,7 @@ import { IChurch, ICreateChurch, IUpdateChurch } from "../interface/IChurch";
 
 export default interface IChurchRepository {
   GetAllChurchs(): Promise<IChurch[]>;
+  GetAllChurchsPerDay(): Promise<IChurch[]>;
   CreateChurch(data: ICreateChurch): Promise<IChurch>;
   DeleteChurch(id: number): Promise<IChurch>;
   UpdateChurch(data: IUpdateChurch): Promise<IChurch>;
