@@ -7,17 +7,17 @@ import { IChurch, IUpdateChurch } from "../interface/IChurch";
 export default class UpdateChurchService {
   constructor(
     @inject("ChurchRepository")
-    private visitoryRepository: IChurchRepository
+    private churchRepository: IChurchRepository
   ) {}
 
   public async execute({ id, label, number }: IUpdateChurch): Promise<IChurch> {
-    const findVisitor = await this.visitoryRepository.FindChurchById(id);
+    const findChurch = await this.churchRepository.FindChurchById(id);
 
-    if (!findVisitor) {
-      throw new ApiError("O Visitante não existe", 404);
+    if (!findChurch) {
+      throw new ApiError("Igreja não encontrada", 404);
     }
 
-    return await this.visitoryRepository.UpdateChurch({
+    return await this.churchRepository.UpdateChurch({
       id,
       label,
       number,
