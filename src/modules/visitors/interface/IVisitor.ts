@@ -1,3 +1,5 @@
+import { IChurch } from "../../church/interface/IChurch";
+
 interface IVisitor {
   id: number;
   name: string;
@@ -20,4 +22,9 @@ interface IUpdateVisitor {
   observation: string;
 }
 
-export { IVisitor, ICreateVisitor, IUpdateVisitor };
+interface IVisitorsPerDay {
+  visitors: IVisitor[];
+  churchs: IChurch[];
+}
+
+export { IVisitor, ICreateVisitor, IUpdateVisitor, IVisitorsPerDay };
