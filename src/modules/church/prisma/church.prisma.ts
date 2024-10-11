@@ -1,11 +1,24 @@
 import { PrismaClient } from "@prisma/client";
 import { IChurch, ICreateChurch, IUpdateChurch } from "../interface/IChurch";
 import IChurchRepository from "../repository/IChurch.repository";
-import { addDays, format } from "date-fns";
+import { addDays, endOfDay, format, startOfDay } from "date-fns";
 
 const prisma = new PrismaClient();
 
 export default class ChurchPrisma implements IChurchRepository {
+  public async GetChurchPerDay(day: Date): Promise<IChurch[]> {
+    const test = await prisma.church.findMany({
+      where: {
+        createdAt: {
+          lte: endOfDay(day),
+          gte: startOfDay(day),
+        },
+      },
+    });
+
+    return test;
+  }
+
   public async FindChurchById(id: number): Promise<IChurch | null> {
     return await prisma.church.findFirst({
       where: {
